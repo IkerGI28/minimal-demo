@@ -8,6 +8,7 @@ for extracurricular activities at Mergington High School.
 from fastapi import FastAPI, HTTPException
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import RedirectResponse
+from fastapi.responses import FileResponse
 import os
 from pathlib import Path
 
@@ -18,6 +19,11 @@ app = FastAPI(title="Mergington High School API",
 current_dir = Path(__file__).parent
 app.mount("/static", StaticFiles(directory=os.path.join(Path(__file__).parent,
           "static")), name="static")
+
+# Ruta específica para favicon
+@app.get("/favicon.ico")
+async def favicon():
+    return FileResponse("src/static/favicon.ico")
 
 # In-memory activity database
 activities = {
