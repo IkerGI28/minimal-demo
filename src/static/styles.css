@@ -142,3 +142,128 @@ footer {
   padding: 20px;
   color: #666;
 }
+
+/* Nueva sección: diseño atractivo para participantes */
+.participants {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.avatar-stack {
+  display: flex;
+  align-items: center;
+  cursor: pointer; /* clickable stack */
+}
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+  border: 2px solid #fff;
+  margin-left: -10px;
+  background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+  font-size: 0.85rem;
+}
+.avatar:first-child { margin-left: 0; }
+.more-badge {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 700;
+  margin-left: -10px;
+  background: linear-gradient(135deg,#333,#666);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+  font-size: 0.85rem;
+}
+.participant-count {
+  font-size: 0.9rem;
+  color: #444;
+  margin-left: 8px;
+}
+.participants-list {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none; /* ensure no bullets */
+  padding-left: 0;
+}
+.participant-item {
+  background: #f3f6fb;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  color: #222;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+/* Small 'X' button to remove participant */
+.remove-btn {
+  background: transparent;
+  border: none;
+  color: #c62828;
+  cursor: pointer;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 6px;
+  margin-left: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.remove-btn:hover {
+  background: rgba(198,40,40,0.08);
+}
+.remove-btn:focus {
+  outline: 2px solid rgba(198,40,40,0.2);
+  outline-offset: 2px;
+}
+.mini-avatar {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #ff7e5f 0%, #feb47b 100%);
+}
+.toggle-btn {
+  background: none;
+  border: none;
+  color: #0066cc;
+  cursor: pointer;
+  font-size: 0.9rem;
+  padding: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 6px;
+  transition: background-color 0.15s;
+}
+.toggle-btn:hover {
+  background-color: rgba(2, 119, 189, 0.06);
+}
+.toggle-btn svg {
+  transition: transform 0.18s ease;
+}
+.toggle-btn.expanded svg {
+  transform: rotate(180deg);
+}
