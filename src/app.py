@@ -114,3 +114,20 @@ async def signup(activity_name: str, email: str):
 
     activity["participants"].append(email)
     return {"message": f"Successfully signed up for {activity_name}"}
+
+
+@app.delete("/activities/{activity_name}/participants")
+async def remove_participant(activity_name: str, email: str):
+    """Remove a student from an activity"""
+    # Validate activity exists
+    if activity_name not in activities:
+        raise HTTPException(status_code=404, detail="Activity not found")
+
+    activity = activities[activity_name]
+    norm_email = email.strip().lower()
+    for p in list(activity["participants"]):
+        if p.strip().lower() == norm_email:
+            activity["participants"].remove(p)
+            return {"message": f"Removed {email} from {activity_name}"}
+
+    raise HTTPException(status_code=404, detail="Participant not found in activity")

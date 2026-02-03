@@ -196,6 +196,8 @@ footer {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+  list-style: none; /* ensure no bullets */
+  padding-left: 0;
 }
 .participant-item {
   background: #f3f6fb;
@@ -207,6 +209,27 @@ footer {
   align-items: center;
   gap: 8px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+/* Small 'X' button to remove participant */
+.remove-btn {
+  background: transparent;
+  border: none;
+  color: #c62828;
+  cursor: pointer;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 6px;
+  margin-left: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.remove-btn:hover {
+  background: rgba(198,40,40,0.08);
+}
+.remove-btn:focus {
+  outline: 2px solid rgba(198,40,40,0.2);
+  outline-offset: 2px;
 }
 .mini-avatar {
   width: 26px;

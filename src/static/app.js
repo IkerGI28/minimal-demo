@@ -111,27 +111,86 @@ document.addEventListener("DOMContentLoaded", () => {
             mini.textContent = initialsFromEmail(email);
             const label = document.createElement("div");
             label.textContent = email;
+
+            // Remove button (X)
+            const removeBtn = document.createElement("button");
+            removeBtn.type = "button";
+            removeBtn.className = "remove-btn";
+            removeBtn.setAttribute("aria-label", `Remove ${email} from ${name}`);
+            removeBtn.textContent = "✕";
+            removeBtn.addEventListener("click", async (e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              if (!confirm(`Remove ${email} from ${name}?`)) return;
+              try {
+                const res = await fetch(`/activities/${encodeURIComponent(name)}/participants?email=${encodeURIComponent(email)}`, {
+                  method: "DELETE",
+                });
+                const data = await res.json();
+                if (res.ok) {
+                  messageDiv.textContent = data.message || "Participant removed";
+                  messageDiv.className = "message info";
+                  messageDiv.classList.remove("hidden");
+                  // Refresh activities to reflect change
+                  fetchActivities();
+                } else {
+                  messageDiv.textContent = data.detail || "Failed to remove participant";
+                  messageDiv.className = "message error";
+                  messageDiv.classList.remove("hidden");
+                }
+                setTimeout(() => messageDiv.classList.add("hidden"), 4000);
+              } catch (err) {
+                console.error("Error removing participant:", err);
+                messageDiv.textContent = "Failed to remove participant";
+                messageDiv.className = "message error";
+                messageDiv.classList.remove("hidden");
+                setTimeout(() => messageDiv.classList.add("hidden"), 4000);
+              }
+            });
+
             item.appendChild(mini);
             item.appendChild(label);
+            item.appendChild(removeBtn);
             list.appendChild(item);
           });
         }
         activityCard.appendChild(list);
 
         // Toggle behavior: alternar lista, actualizar aria y clase visual (sin texto)
+        // Start hidden (explicit) to avoid relying only on CSS classes
+        list.style.display = 'none';
         const toggleFunc = (e) => {
           if (e) { e.preventDefault(); e.stopPropagation(); }
-          const isNowHidden = list.classList.toggle("hidden");
-          const expanded = (!isNowHidden);
-          toggle.setAttribute("aria-expanded", expanded.toString());
-          toggle.setAttribute("aria-label", expanded ? "Ocultar participantes" : "Mostrar participantes");
-          toggle.classList.toggle("expanded", expanded);
+          const isHidden = list.classList.contains("hidden");
+          if (isHidden) {
+            list.classList.remove("hidden");
+            list.style.display = 'flex';
+            toggle.setAttribute("aria-expanded", "true");
+            toggle.setAttribute("aria-label", "Ocultar participantes");
+            toggle.classList.add("expanded");
+          } else {
+            list.classList.add("hidden");
+            list.style.display = 'none';
+            toggle.setAttribute("aria-expanded", "false");
+            toggle.setAttribute("aria-label", "Mostrar participantes");
+            toggle.classList.remove("expanded");
+          }
         };
         toggle.addEventListener("click", (e) => toggleFunc(e));
         avatarStack.addEventListener("click", (e) => {
           e.preventDefault();
           e.stopPropagation();
           toggleFunc();
+        });
+        // Optional: clicking outside the activity card will close the list
+        document.addEventListener("click", (e) => {
+          if (!activityCard.contains(e.target) && !list.classList.contains("hidden")) {
+            list.classList.add("hidden");
+            list.style.display = 'none';
+            toggle.setAttribute("aria-expanded", "false");
+            toggle.setAttribute("aria-label", "Mostrar participantes");
+            toggle.classList.remove("expanded");
+          }
         });
 
         // --- Fin sección participantes ---
