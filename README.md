@@ -17,3 +17,12 @@ pip install -r requirements.txt
 ```
 
 Or use the VS Code debugger to run the application.
+
+## Actividades añadidas
+
+- Deportes: Fútbol
+- Deportes: Tenis
+- Artísticas: Pintura
+- Artísticas: Danza
+- Intelectuales: Ajedrez
+- Intelectuales: Lectura
